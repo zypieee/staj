@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Fonksiyonlarla Sayı İşlemleri</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #e8f5e9;
+      border-left: 5px solid #4caf50;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Sayı Analiz Aracı</h1>
+  <input type="number" id="sayiInput" placeholder="Bir sayı giriniz">
+  <button onclick="hepsiniHesapla()">Hesapla</button>
+  <div id="sonuc" class="result"></div>
+</div>
+
+<script>
+  // 🔢 Fonksiyonlar
+  function karesiniHesapla(n) {
+    return n * n;
+  }
+
+  function kupunuHesapla(n) {
+    return n * n * n;
+  }
+
+  function tekMiCiftMi(n) {
+    return n % 2 === 0 ? "Çift" : "Tek";
+  }
+
+  function asalMi(n) {
+    if (n < 2) return "Hayır";
+    for (let i = 2; i <= Math.sqrt(n); i++) {
+      if (n % i === 0) return "Hayır";
+    }
+    return "Evet";
+  }
+
+  function faktoriyel(n) {
+    if (n < 0) return "Tanımsız";
+    let carpim = 1;
+    for (let i = 1; i <= n; i++) {
+      carpim *= i;
+    }
+    return carpim;
+  }
+
+  function toplamHesapla(n) {
+    let toplam = 0;
+    for (let i = 1; i <= n; i++) {
+      toplam += i;
+    }
+    return toplam;
+  }
+
+  // 🧠 Tüm hesaplamaları yapan ana fonksiyon
+  function hepsiniHesapla() {
+    const sayi = parseInt(document.getElementById("sayiInput").value);
+    if (isNaN(sayi)) {
+      document.getElementById("sonuc").innerHTML = "Lütfen geçerli bir sayı giriniz.";
+      return;
+    }
+
+    // Fonksiyon çağrıları
+    const kare = karesiniHesapla(sayi);
+    const kup = kupunuHesapla(sayi);
+    const tekCift = tekMiCiftMi(sayi);
+    const asal = asalMi(sayi);
+    const faktor = faktoriyel(sayi);
+    const toplam = toplamHesapla(sayi);
+
+    // Sonuçları yazdır
+    document.getElementById("sonuc").innerHTML = `
+      <strong>Girdiğiniz Sayı:</strong> ${sayi}<br><br>
+      🔹 Karesi: ${kare}<br>
+      🔹 Küpü: ${kup}<br>
+      🔹 Tek mi Çift mi: ${tekCift}<br>
+      🔹 Asal mı: ${asal}<br>
+      🔹 Faktöriyeli: ${faktor}<br>
+      🔹 1'den ${sayi}'ye kadar toplam: ${toplam}
+    `;
+  }
+</script>
+
+</body>
+</html>
