@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Site Seçici</title>
+  <style>
+    /* Sayfa gövdesi ortalanıyor */
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e8e2db, #0585df);
+      color: #fff;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    }
+
+    button {
+      background-color: rgba(255, 255, 255, 0.85);
+      border: none;
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      color: #333;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      min-width: 250px;
+    }
+
+    button:hover {
+      background-color: #63f005;
+      color: #fff;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+      button {
+        min-width: 180px;
+        font-size: 1rem;
+        padding: 12px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>İş Seçimi</h1>
+  <button onclick="window.location.href='veriyapısı.html'">Veri Yapısı Örnekleri</button>
+</body>
+</html>

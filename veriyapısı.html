@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Veri Yapıları Görselleştirici</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tab {
+      padding: 10px 20px;
+      background: #ddd;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .tab.active {
+      background: #4a90e2;
+      color: white;
+    }
+    .section {
+      display: none;
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+    .section.active {
+      display: block;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    input, button {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    button {
+      background: #4a90e2;
+      color: white;
+      cursor: pointer;
+    }
+    .visual {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .item {
+      padding: 10px 15px;
+      background: #4a90e2;
+      color: white;
+      border-radius: 8px;
+      min-width: 50px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Veri Yapıları Görselleştirici</h1>
+
+<div class="tabs">
+  <div class="tab active" data-tab="array">Dizi</div>
+  <div class="tab" data-tab="stack">Yığın</div>
+  <div class="tab" data-tab="queue">Kuyruk</div>
+  <div class="tab" data-tab="linked">Bağlı Liste</div>
+</div>
+
+<!-- Diziler -->
+<div class="section active" id="array">
+  <h2>Dizi</h2>
+  <div class="controls">
+    <input type="text" id="array-input" placeholder="Değer gir">
+    <button onclick="addToArray()">Ekle</button>
+    <button onclick="clearArray()">Temizle</button>
+  </div>
+  <div class="visual" id="array-view"></div>
+</div>
+
+<!-- Yığın -->
+<div class="section" id="stack">
+  <h2>Yığın (Stack)</h2>
+  <div class="controls">
+    <input type="text" id="stack-input" placeholder="Değer gir">
+    <button onclick="pushStack()">Push</button>
+    <button onclick="popStack()">Pop</button>
+    <button onclick="clearStack()">Temizle</button>
+  </div>
+  <div class="visual" id="stack-view"></div>
+</div>
+
+<!-- Kuyruk -->
+<div class="section" id="queue">
+  <h2>Kuyruk (Queue)</h2>
+  <div class="controls">
+    <input type="text" id="queue-input" placeholder="Değer gir">
+    <button onclick="enqueue()">Enqueue</button>
+    <button onclick="dequeue()">Dequeue</button>
+    <button onclick="clearQueue()">Temizle</button>
+  </div>
+  <div class="visual" id="queue-view"></div>
+</div>
+
+<!-- Bağlı Liste -->
+<div class="section" id="linked">
+  <h2>Bağlı Liste (Linked List)</h2>
+  <div class="controls">
+    <input type="text" id="linked-input" placeholder="Değer gir">
+    <button onclick="addLinked()">Ekle</button>
+    <button onclick="clearLinked()">Temizle</button>
+  </div>
+  <div class="visual" id="linked-view"></div>
+</div>
+
+<script>
+  // Sekme geçişleri
+  const tabs = document.querySelectorAll('.tab');
+  const sections = document.querySelectorAll('.section');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Dizi
+  let array = [];
+  function addToArray() {
+    const val = document.getElementById("array-input").value;
+    if (val) array.push(val);
+    renderArray();
+  }
+  function clearArray() {
+    array = [];
+    renderArray();
+  }
+  function renderArray() {
+    const view = document.getElementById("array-view");
+    view.innerHTML = array.map(val => `<div class="item">${val}</div>`).join('');
+  }
+
+  // Yığın
+  let stack = [];
+  function pushStack() {
+    const val = document.getElementById("stack-input").value;
+    if (val) stack.push(val);
+    renderStack();
+  }
+  function popStack() {
+    stack.pop();
+    renderStack();
+  }
+  function clearStack() {
+    stack = [];
+    renderStack();
+  }
+  function renderStack() {
+    const view = document.getElementById("stack-view");
+    view.innerHTML = [...stack].reverse().map(val => `<div class="item">${val}</div>`).join('');
+  }
+
+  // Kuyruk
+  let queue = [];
+  function enqueue() {
+    const val = document.getElementById("queue-input").value;
+    if (val) queue.push(val);
+    renderQueue();
+  }
+  function dequeue() {
+    queue.shift();
+    renderQueue();
+  }
+  function clearQueue() {
+    queue = [];
+    renderQueue();
+  }
+  function renderQueue() {
+    const view = document.getElementById("queue-view");
+    view.innerHTML = queue.map(val => `<div class="item">${val}</div>`).join('');
+  }
+
+  // Bağlı Liste (tek yönlü)
+  let linkedList = [];
+  function addLinked() {
+    const val = document.getElementById("linked-input").value;
+    if (val) linkedList.push(val);
+    renderLinked();
+  }
+  function clearLinked() {
+    linkedList = [];
+    renderLinked();
+  }
+  function renderLinked() {
+    const view = document.getElementById("linked-view");
+    view.innerHTML = linkedList.map(val => `<div class="item">${val}</div>`).join('<div>→</div>');
+  }
+</script>
+
+</body>
+</html>
