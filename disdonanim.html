@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dış Donanım Birimleri - Gelişmiş</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+      margin: 0;
+      padding: 0;
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: #334e68;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.4rem;
+      letter-spacing: 1.2px;
+    }
+    header p {
+      margin-top: 10px;
+      font-weight: 300;
+      font-size: 1.1rem;
+      color: #cbd5e0;
+    }
+    .kategori-bar {
+      text-align: center;
+      padding: 15px 10px;
+      background: #f0f4f8;
+      box-shadow: inset 0 -2px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+    .kategori-bar button {
+      background-color: #556ee6;
+      border: none;
+      color: white;
+      padding: 10px 18px;
+      font-size: 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(85,110,230,0.4);
+      user-select: none;
+    }
+    .kategori-bar button:hover,
+    .kategori-bar button.active {
+      background-color: #1f3c88;
+      box-shadow: 0 6px 10px rgba(31,60,136,0.7);
+    }
+    .arama-alani {
+      max-width: 400px;
+      margin: 20px auto;
+      text-align: center;
+    }
+    .arama-alani input {
+      width: 90%;
+      max-width: 400px;
+      padding: 10px 15px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      border: 2px solid #556ee6;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .arama-alani input:focus {
+      border-color: #1f3c88;
+    }
+    main {
+      flex-grow: 1;
+      max-width: 1100px;
+      margin: 15px auto 50px;
+      padding: 0 15px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      padding: 20px 18px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+      color: #334e68;
+    }
+    .card p {
+      flex-grow: 1;
+      font-weight: 500;
+      color: #667085;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+    .card small {
+      color: #a3aed0;
+      font-weight: 600;
+      margin-top: 12px;
+      text-align: right;
+      font-style: italic;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background-color: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      background: white;
+      border-radius: 15px;
+      max-width: 520px;
+      padding: 30px 25px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+      position: relative;
+      text-align: center;
+      color: #222;
+    }
+    .modal-content h2 {
+      margin-top: 0;
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: #334e68;
+    }
+    .modal-content p {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      font-weight: 500;
+      color: #444;
+    }
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #334e68;
+      transition: color 0.3s ease;
+    }
+    .modal-close:hover {
+      color: #d6336c;
+    }
+    @media(max-width: 480px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+      main {
+        grid-template-columns: 1fr;
+        margin: 15px auto 40px;
+      }
+      .kategori-bar {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🖥️ Dış Donanım Birimleri Rehberi</h1>
+  <p>Bilgisayarınızın dışındaki donanım parçalarını öğrenin, detaylarına göz atın.</p>
+</header>
+
+<div class="kategori-bar" id="kategoriBar">
+  <button class="active" data-kategori="Tümü">Tümü</button>
+  <button data-kategori="Giriş">Giriş Aygıtları</button>
+  <button data-kategori="Çıkış">Çıkış Aygıtları</button>
+  <button data-kategori="Depolama">Depolama</button>
+  <button data-kategori="Bağlantı">Bağlantı Donanımları</button>
+  <button data-kategori="Taşınabilir">Taşınabilir</button>
+  <button data-kategori="Çevre">Çevre Birimleri</button>
+</div>
+
+<div class="arama-alani">
+  <input type="text" id="aramaInput" placeholder="Dış donanım ara..." aria-label="Dış donanım ara" />
+</div>
+
+<main id="urunlerContainer"></main>
+
+<!-- Modal -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalBaslik" aria-describedby="modalDetay">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Kapat">&times;</button>
+    <h2 id="modalBaslik"></h2>
+    <p id="modalDetay"></p>
+  </div>
+</div>
+
+<script>
+  const donanimlar = [
+    { ad: "Klavye", kategori: "Giriş", detay: "Bilgisayara veri girişi yapmak için kullanılan tuş takımıdır." },
+    { ad: "Fare (Mouse)", kategori: "Giriş", detay: "Ekran üzerindeki imleci hareket ettirerek bilgisayarı kontrol etmeye yarar." },
+    { ad: "Web Kamera", kategori: "Giriş", detay: "Canlı görüntü yakalamak ve görüntülü görüşme yapmak için kullanılır." },
+    { ad: "Mikrofon", kategori: "Giriş", detay: "Ses sinyallerini bilgisayara aktaran cihazdır." },
+    { ad: "Monitör", kategori: "Çıkış", detay: "Bilgisayarın görüntüsünü kullanıcıya gösteren ekran birimidir." },
+    { ad: "Yazıcı", kategori: "Çıkış", detay: "Bilgisayardan alınan belgeleri kağıda basar." },
+    { ad: "Hoparlör", kategori: "Çıkış", detay: "Bilgisayardan gelen sesleri dışarıya verir." },
+    { ad: "Harici Hard Disk", kategori: "Depolama", detay: "Verilerin dış ortamda yedeklenmesi ve taşınması için kullanılır." },
+    { ad: "USB Bellek", kategori: "Depolama", detay: "Küçük taşınabilir veri depolama aygıtıdır." },
+    { ad: "Harici SSD", kategori: "Depolama", detay: "Yüksek hızlı taşınabilir depolama birimi." },
+    { ad: "Modem", kategori: "Bağlantı", detay: "İnternet bağlantısını sağlayan cihazdır." },
+    { ad: "Router (Yönlendirici)", kategori: "Bağlantı", detay: "Ağ trafiğini yöneten ve internet dağıtımı yapan cihazdır." },
+    { ad: "Bluetooth Adaptörü", kategori: "Bağlantı", detay: "Kablosuz kısa mesafe veri aktarımı sağlar." },
+    { ad: "Kablolu Ağ Kartı", kategori: "Bağlantı", detay: "Ethernet kablosu ile ağ bağlantısı sağlar." },
+    { ad: "Dizüstü Bilgisayar", kategori: "Taşınabilir", detay: "Taşınabilir bilgisayar cihazıdır." },
+    { ad: "Tablet", kategori: "Taşınabilir", detay: "Dokunmatik ekranlı taşınabilir bilgisayardır." },
+    { ad: "Harici DVD Sürücü", kategori: "Çevre", detay: "Optik diskleri okumak ve yazmak için kullanılır." },
+    { ad: "Kart Okuyucu", kategori: "Çevre", detay: "Farklı hafıza kartlarını okumaya yarayan aygıt." }
+  ];
+
+  const urunlerContainer = document.getElementById('urunlerContainer');
+  const modal = document.getElementById('modal');
+  const modalBaslik = document.getElementById('modalBaslik');
+  const modalDetay = document.getElementById('modalDetay');
+  const kategoriBar = document.getElementById('kategoriBar');
+  const aramaInput = document.getElementById('aramaInput');
+  const modalCloseBtn = modal.querySelector('.modal-close');
+
+  let secilenKategori = 'Tümü';
+
+  function urunleriGoster(liste) {
+    urunlerContainer.innerHTML = '';
+    if(liste.length === 0) {
+      urunlerContainer.innerHTML = '<p style="text-align:center; font-weight:bold; color:#334e68;">Aramanıza uygun ürün bulunamadı.</p>';
+      return;
+    }
+    liste.forEach(item => {
+      const kart = document.createElement('article');
+      kart.classList.add('card');
+      kart.tabIndex = 0;
+      kart.setAttribute('role', 'button');
+      kart.setAttribute('aria-pressed', 'false');
+      kart.innerHTML = `
+        <h3>${item.ad}</h3>
+        <p>${item.detay.length > 80 ? item.detay.substring(0, 80) + '...' : item.detay}</p>
+        <small>Kategori: ${item.kategori}</small>
+      `;
+      kart.addEventListener('click', () => {
+        modalBaslik.textContent = item.ad;
+        modalDetay.textContent = item.detay;
+        modal.classList.add('active');
+      });
+      kart.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          kart.click();
+        }
+      });
+      urunlerContainer.appendChild(kart);
+    });
+  }
+
+  function filtrele(kategori) {
+    secilenKategori = kategori;
+    // Buton aktif durumu güncelle
+    Array.from(kategoriBar.children).forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.kategori === kategori);
+    });
+    aramaInput.value = '';
+    guncelleListe();
+  }
+
+  function guncelleListe() {
+    let filtreliListe = donanimlar;
+    if(secilenKategori !== 'Tümü') {
+      filtreliListe = filtreliListe.filter(item => item.kategori === secilenKategori);
+    }
+    const aramaMetni = aramaInput.value.trim().toLowerCase();
+    if(aramaMetni) {
+      filtreliListe = filtreliListe.filter(item => item.ad.toLowerCase().includes(aramaMetni) || item.detay.toLowerCase().includes(aramaMetni));
+    }
+    urunleriGoster(filtreliListe);
+  }
+
+  // Kategori butonlarına event listener ekle
+  Array.from(kategoriBar.children).forEach(btn => {
+    btn.addEventListener('click', () => filtrele(btn.dataset.kategori));
+  });
+
+  // Arama alanına event listener ekle
+  aramaInput.addEventListener('input', guncelleListe);
+
+  // Modal kapatma
+  modalCloseBtn.addEventListener('click', () => modal.classList.remove('active'));
+  modal.addEventListener('click', e => {
+    if(e.target === modal) modal.classList.remove('active');
+  });
+  // Escape tuşuyla modal kapatma
+  window.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && modal.classList.contains('active')) {
+      modal.classList.remove('active');
+    }
+  });
+
+  // Başlangıçta tüm ürünleri göster
+  urunleriGoster(donanimlar);
+</script>
+
+</body>
+</html>
