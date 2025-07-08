@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Karar ve Döngü Yapıları</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: 20px auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 14px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      background: #4a90e2;
+      color: white;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 10px;
+      padding: 10px;
+      background: #e8f0fe;
+      border-left: 4px solid #4a90e2;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Karar ve Döngü Yapıları Uygulaması</h1>
+
+<div class="card">
+  <h2>1. If-Else Kontrolü (Sayı Pozitif mi?)</h2>
+  <input type="number" id="ifInput" placeholder="Bir sayı gir">
+  <button onclick="checkIfElse()">Kontrol Et</button>
+  <div class="result" id="ifResult"></div>
+</div>
+
+<div class="card">
+  <h2>2. Switch Kullanımı (Gün Seç)</h2>
+  <select id="switchInput">
+    <option value="">Gün Seçiniz</option>
+    <option value="1">1 - Pazartesi</option>
+    <option value="2">2 - Salı</option>
+    <option value="3">3 - Çarşamba</option>
+    <option value="4">4 - Perşembe</option>
+    <option value="5">5 - Cuma</option>
+    <option value="6">6 - Cumartesi</option>
+    <option value="7">7 - Pazar</option>
+  </select>
+  <button onclick="checkSwitch()">Göster</button>
+  <div class="result" id="switchResult"></div>
+</div>
+
+<div class="card">
+  <h2>3. For Döngüsü (Toplam Hesapla)</h2>
+  <input type="number" id="forInput" placeholder="1'den n'e kadar toplam için sayı gir">
+  <button onclick="calculateSum()">Hesapla</button>
+  <div class="result" id="forResult"></div>
+</div>
+
+<script>
+  function checkIfElse() {
+    const num = parseFloat(document.getElementById("ifInput").value);
+    let message = "";
+
+    if (isNaN(num)) {
+      message = "Lütfen geçerli bir sayı giriniz.";
+    } else if (num > 0) {
+      message = "Sayı pozitiftir.";
+    } else if (num < 0) {
+      message = "Sayı negatiftir.";
+    } else {
+      message = "Sayı sıfırdır.";
+    }
+
+    document.getElementById("ifResult").innerText = message;
+  }
+
+  function checkSwitch() {
+    const val = document.getElementById("switchInput").value;
+    let message = "";
+
+    switch (val) {
+      case "1": message = "Seçilen gün: Pazartesi"; break;
+      case "2": message = "Seçilen gün: Salı"; break;
+      case "3": message = "Seçilen gün: Çarşamba"; break;
+      case "4": message = "Seçilen gün: Perşembe"; break;
+      case "5": message = "Seçilen gün: Cuma"; break;
+      case "6": message = "Seçilen gün: Cumartesi"; break;
+      case "7": message = "Seçilen gün: Pazar"; break;
+      default: message = "Lütfen bir gün seçiniz.";
+    }
+
+    document.getElementById("switchResult").innerText = message;
+  }
+
+  function calculateSum() {
+    const n = parseInt(document.getElementById("forInput").value);
+    let total = 0;
+
+    if (isNaN(n) || n < 1) {
+      document.getElementById("forResult").innerText = "Geçerli bir sayı giriniz (>=1)";
+      return;
+    }
+
+    for (let i = 1; i <= n; i++) {
+      total += i;
+    }
+
+    document.getElementById("forResult").innerText = `1'den ${n}'e kadar toplam: ${total}`;
+  }
+</script>
+
+</body>
+</html>
